@@ -7,7 +7,7 @@ const cors = require("cors");
 app.use(cors());
 app.use(express.json());
 //
-// mern-book-store ,
+// mern-book-store , 4UB1GerKNyuCWpXl
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
@@ -17,7 +17,7 @@ app.get("/", (req, res) => {
 
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const uri =
-  "mongodb+srv://mern-book-store:<password>@cluster0.ih9nona.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+  "mongodb+srv://mern-book-store:4UB1GerKNyuCWpXl@cluster0.ih9nona.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
@@ -46,11 +46,11 @@ async function run() {
 
     // get all books from thye database
 
-    app.get("/all-books", async(req ,res) => {
-        const books = bookCollections.find();
-        const result = await books.toArray();
-        res.send(result);
-    })
+    // app.get("/all-books", async(req ,res) => {
+    //     const books = bookCollections.find();
+    //     const result = await books.toArray();
+    //     res.send(result);
+    // })
 
     ///
 
@@ -102,6 +102,18 @@ async function run() {
 
     ///
 
+    // get single book data 
+
+    app.get("/book/:id", async(req, res) => {
+        const id = req.params.id;
+        // console.log(id); 
+        const filter = {_id: new ObjectId(id)};
+        const result = await bookCollections.findOne(filter);
+        res.send(result);
+    })
+
+    ///
+
 
 
     await client.db("admin").command({ ping: 1 });
@@ -110,7 +122,6 @@ async function run() {
     );
   } finally {
     // Ensures that the client will close when you finish/error
-    //  4UB1GerKNyuCWpXl
     // await client.close();
   }
 }
